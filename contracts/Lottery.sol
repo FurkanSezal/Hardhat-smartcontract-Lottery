@@ -4,6 +4,7 @@ pragma solidity ^0.8.7;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
 import "@chainlink/contracts/src/v0.8/KeeperCompatible.sol";
+import "@chainlink/contracts/src/v0.8/ConfirmedOwner.sol";
 
 error Lottery__NotEnoughEthEntered();
 error Lottery__LotteryTransferFailed();
@@ -20,7 +21,11 @@ error Lottery__UpkeepNotNeeded(
  * @dev This implements the Chainlink VRF Version 2
  */
 
-contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
+contract Lottery is
+    VRFConsumerBaseV2,
+    KeeperCompatibleInterface,
+    ConfirmedOwner
+{
     /* Type declarations */
     enum LotteryState {
         OPEN,
@@ -59,7 +64,7 @@ contract Lottery is VRFConsumerBaseV2, KeeperCompatibleInterface {
         uint64 subscriptionId,
         uint32 callbackGasLimit,
         uint256 interval
-    ) VRFConsumerBaseV2(vrfCoordinatorV2) {
+    ) VRFConsumerBaseV2(vrfCoordinatorV2) ConfirmedOwner(msg.sender) {
         i_enteranceFee = enteranceFee;
         i_vrfCoordinator = VRFCoordinatorV2Interface(vrfCoordinatorV2);
         i_keyHash = keyHash;

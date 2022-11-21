@@ -13,6 +13,7 @@ const { assert, expect } = require("chai");
         // get the deployer account from getNamedAccount ( which come from hardhat-config)
         accounts = await ethers.getSigners();
         deployer = (await getNamedAccounts()).deployer;
+        console.log(deployer);
         // deploy all our contracts
         await deployments.fixture("all");
         lottery = await ethers.getContract("Lottery", deployer);

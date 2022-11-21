@@ -6,10 +6,11 @@ require("hardhat-gas-reporter");
 require("hardhat-contract-sizer");
 require("dotenv").config();
 
-const RINKEBY_RPC_URL = process.env.RINKEBY_RPC_URL;
+const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
+const QUICKNODE_RPC_URL = process.env.QUICKNODE_RPC_URL;
 
 module.exports = {
   defaultNetwork: "hardhat",
@@ -21,10 +22,16 @@ module.exports = {
     localhost: {
       chainId: 31337,
     },
-    rinkeby: {
-      url: RINKEBY_RPC_URL,
+    goerli: {
+      url: GOERLI_RPC_URL,
       accounts: [PRIVATE_KEY],
-      chainId: 4,
+      chainId: 5,
+      blockConfirmations: 6,
+    },
+    mumbai: {
+      url: QUICKNODE_RPC_URL,
+      accounts: [PRIVATE_KEY],
+      chainId: 80001,
       blockConfirmations: 6,
     },
   },

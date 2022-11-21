@@ -31,6 +31,7 @@ developmentChains.includes(network.name)
               console.log("WinnerPicked event fired!");
               try {
                 // put assert here
+                console.log(deployer);
                 const recentWinner = await lottery.getRecentWinner();
                 const lotteryState = await lottery.getLotteryState();
                 const winnerEndingBalance = await accounts[0].getBalance();
@@ -51,9 +52,11 @@ developmentChains.includes(network.name)
                 reject(error);
               }
             });
+            console.log("Entering lottery...");
             const tx = await lottery.enterLottery({ value: enteranceFee });
             // never forget the await! Spend 2 days for that.
             await tx.wait(1);
+            console.log("EnteranceFee paid!");
             const winnerStartingBalance = await accounts[0].getBalance();
           });
         });
